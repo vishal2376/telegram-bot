@@ -1,30 +1,32 @@
 import telebot
 from telebot import types
 import random
+import json
 
 TOKEN = open('api-keys.txt').readline()
+cpp_data = json.load(open('cpp_resource.json'))
 
 bot = telebot.TeleBot(TOKEN)
 
-print("Bot is ready....")
+print("Bot is online")
 
 hey_msg = ['Hi ','Hello ','Hey ']
 bot_name = ['Developer','Coder','Resource','Dev']
 
-knownUsers = []  # todo: save these in a file,
-userStep = {}  # so they won't reset every time the bot restarts
+knownUsers = []
+userStep = {}
 
 #command_cpp keyboard [value=1]
 cpp_select = types.ReplyKeyboardMarkup(one_time_keyboard=True)
-cpp_select.add('Youtube videos','PDFs','websites','Courses')
+cpp_select.add('Youtube videos','PDFs','Courses','Websites(Learning)','Websites(Practice)')
 
 
 hideBoard = types.ReplyKeyboardRemove()  # if click on button then hide the keyboard
 
 commands = {
+    'cpp' : 'Show best C++ Learning resources',
     'help': 'Always ready for help',
     'all' : 'List all commands',
-    'cpp' : 'Show best C++ Learning resources',
     'codeforces' : 'still in development...'
 }
  
@@ -36,9 +38,9 @@ def command_all(m):
 		text += commands[key] + "\n"
 	bot.send_message(m.chat.id, text)
 
-@bot.message_handler(commands=['all'])
+@bot.message_handler(commands=['codeforces'])
 def command_codeforces(m):
-	text = "Still in development ....."
+	text = "Comming soon....."
 	bot.send_message(m.chat.id, text)
 
 
@@ -48,9 +50,22 @@ def command_help(m):
 	text = random.choice(hey_msg)
 	text += m.chat.first_name
 	text += ', I am '+ random.choice(bot_name) + " Bot"
-	text += '\nI can give you the best resources for programming (c++ available only , rest will add later)'
+	text += '\nI have collection of best resources for programming language(till now only c++ available)'
 	text += "\n\nAll commands are available at  /all  :)"
 	bot.send_message(m.chat.id, text)
+
+#get resource data
+def cpp_resource(NAME):
+	for cpp in cpp_data:
+		if cpp['name'] == NAME:
+			text = ''
+			for i in cpp:
+				if i!='name':
+					text += i
+					text += "\n"
+					text += cpp[i]
+					text += "\n\n"
+			return text
 
 def get_user_step(uid):
     if uid in userStep:
@@ -66,7 +81,7 @@ def get_user_step(uid):
 def listener(messages):
     for m in messages:
         if m.content_type == 'text':
-            print(str(m.chat.first_name) + " [" + str(m.chat.id) + "]: " + m.text)
+            print(str(m.chat.first_name) + " : " + m.text)
 
 bot.set_update_listener(listener)
 
@@ -94,13 +109,20 @@ def msg_image_select(m):
 	userStep[cid] = 0
 	bot.send_chat_action(cid, 'typing')
 	if m.text == 'Youtube videos':
-   		bot.send_message(cid,"yt links from file",reply_markup=hideBoard)
-	elif m.text =='PDFs'  :
-   		bot.send_message(cid,"pdfs link from file",reply_markup=hideBoard)
-	elif m.text =='websites' :
-   		bot.send_message(cid,"website text from file",reply_markup=hideBoard)
-	elif m.text =='Courses' :
-   		bot.send_message(cid,"coursed text from file",reply_markup=hideBoard)
+		text = cpp_resource('yt')
+		bot.send_message(cid,text,disable_web_page_preview=True,reply_markup=hideBoard)
+	elif m.text =='PDFs':
+		text = cpp_resource('pdf')
+		bot.send_message(cid,text,disable_web_page_preview=True,reply_markup=hideBoard)
+	elif m.text =='Websites(Practice)':
+		text = cpp_resource('practice_websites')
+		bot.send_message(cid,text,disable_web_page_preview=True,reply_markup=hideBoard)
+	elif m.text =='Websites(Learning)':
+		text = cpp_resource('learning_websites')
+		bot.send_message(cid,text,disable_web_page_preview=True,reply_markup=hideBoard)
+	elif m.text =='Courses':
+		text = cpp_resource('courses')
+		bot.send_message(cid,text,disable_web_page_preview=True,reply_markup=hideBoard)
 	else:
 		bot.send_message(cid, "Invalid Commands")
 
