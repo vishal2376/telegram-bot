@@ -93,9 +93,7 @@ def command_start(m):
 		userStep[cid] = 0
 		command_help(m)
 	else:
-		text = random.choice(hey_msg)
-		text += m.chat.first_name
-		bot.send_message(cid, text)
+		command_help(m)
 
 @bot.message_handler(commands=['cpp'])
 def command_image(m):
