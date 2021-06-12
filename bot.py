@@ -4,6 +4,7 @@ from telebot import types
 import random
 import json
 
+TOKEN = open('.env').readline()
 TOKEN = os.getenv('TOKEN')
 cpp_data = json.load(open('cpp_resource.json'))
 
