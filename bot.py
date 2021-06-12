@@ -1,9 +1,10 @@
+import os
 import telebot
 from telebot import types
 import random
 import json
 
-TOKEN = open('api-keys.txt').readline()
+TOKEN = os.getenv('TOKEN')
 cpp_data = json.load(open('cpp_resource.json'))
 
 bot = telebot.TeleBot(TOKEN)
