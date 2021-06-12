@@ -1,11 +1,18 @@
+"""
+[emoji symbols]
+orange box : 🔸
+man with laptop : 👨‍💻
+"""
+
 import os
 import telebot
 from telebot import types
 import random
 import json
 
-TOKEN = os.getenv('TOKEN')
 # TOKEN = open('.env').readline()
+TOKEN = os.getenv('TOKEN')
+
 cpp_data = json.load(open('cpp_resource.json'))
 
 bot = telebot.TeleBot(TOKEN)
@@ -13,8 +20,8 @@ bot = telebot.TeleBot(TOKEN)
 print("Bot is online")
 
 hey_msg = ['Hi ','Hello ','Hey ']
-bot_name = ['Developer','Coder','Resource']
-user_name = ['Developer','Coder','Sexy','Dev','Buddy','Programmer']
+bot_name = ['Developer','Coder','Mastermind','Cool','Resource']
+user_name = ['Developer','Coder','Genius','Mastermind','Buddy','Programmer']
 
 knownUsers = []
 userStep = {}
@@ -29,19 +36,25 @@ hideBoard = types.ReplyKeyboardRemove()  # if click on button then hide the keyb
 commands = {
 	'start':'Restart bot',
     'cpp' : 'C++ resources',
-    'codeforces' : 'still in development...',
-    'github' : 'still in development...',
     'all' : 'List all commands',
     'help': 'Help',
+    'github' : 'still in development...',
+    'codeforces' : 'still in development...',
 }
  
 @bot.message_handler(commands=['all'])
 def command_all(m):
-	text = "Available commands \n\n"
+	text = " All available commands 👨‍💻 : \n\n"
 	for key in commands:
-		text += "/" + key + " : "
-		text += commands[key] + "\n"
+		text += "🔸 /" + key + " : "
+		text += commands[key] + "\n\n"
 	bot.send_message(m.chat.id, text)
+
+@bot.message_handler(commands=['cpp'])
+def command_cpp(m):
+    cid = m.chat.id
+    bot.send_message(cid, "What do you want ? ", reply_markup=cpp_select)
+    userStep[cid] = 1
 
 @bot.message_handler(commands=['codeforces'])
 def command_codeforces(m):
@@ -49,7 +62,7 @@ def command_codeforces(m):
 	bot.reply_to(m, text)
 
 @bot.message_handler(commands=['github'])
-def command_codeforces(m):
+def command_github(m):
 	text = "Comming soon....."
 	bot.reply_to(m, text)
 
@@ -61,10 +74,13 @@ def command_help(m):
 		text += m.chat.first_name
 	else:
 		text += random.choice(user_name)	
-	text += ', I am '+ random.choice(bot_name) + " Bot"
-	text += '\nI have collection of best resources for programming language(till now only c++ available)'
+	text += ' , I am a '+ random.choice(bot_name) + " Bot"
+	text += '\n\nI can do following things :'
+	text += '\n 🔸 Provide C++ Resources'
+	text += '\n 🔸 Github Repository(comming soon)'
+	text += '\n 🔸 Codeforces features(comming soon)'
 	text += "\n\nSee all commands at  /all  :)"
-	text += "\n\n\nContact Developer : @vishal2376"
+	text += "\n\n\nContact Developer 👨‍💻: @vishal2376"
 	bot.reply_to(m, text)
 
 #get resource data
@@ -74,6 +90,7 @@ def cpp_resource(NAME):
 			text = ''
 			for i in cpp:
 				if i!='name':
+					text += '🔸 '
 					text += i
 					text += "\n"
 					text += cpp[i]
@@ -107,15 +124,9 @@ def command_start(m):
 		command_help(m)
 	else:
 		command_help(m)
-
-@bot.message_handler(commands=['cpp'])
-def command_image(m):
-    cid = m.chat.id
-    bot.send_message(cid, "What do you want ? ", reply_markup=cpp_select)
-    userStep[cid] = 1
-
+ 
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 1)
-def msg_image_select(m):
+def msg_cpp_select(m):
 	cid = m.chat.id
 	userStep[cid] = 0
 	bot.send_chat_action(cid, 'typing')
@@ -142,16 +153,12 @@ def msg_image_select(m):
 def command_default(m):
 
 	lower_text = m.text.lower()
-	if 'hi' in lower_text or 'hello' in lower_text:
-		text = random.choice(hey_msg).capitalize()
+	if lower_text == 'hello' or lower_text == 'hi':
+		text = random.choice(hey_msg)
 		if m.chat.type == 'private':
 			text += m.chat.first_name
 		else:
 			text += random.choice(user_name)
 		bot.reply_to(m, text)
-	if 'help' in lower_text:
-		print("yes")
-		bot.reply_to(m,"heklkj")
-
-
+ 
 bot.polling()
