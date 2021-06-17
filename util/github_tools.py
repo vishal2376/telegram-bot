@@ -57,15 +57,21 @@ def search_repo(name='hello world'):
 		count += 1
 		if count == 10:
 			break;		
-	return text	
-
-def search_repo_by_issue(issue_tag='good-first-issue:>3'):
-	repository = g.search_repositories(query=issue_tag)
-	text = []
-	count = 0
-	for repo in repository:
-		text.append(repo.full_name)
-		count += 1
-		if count == 10:
-			break;		
 	return text
+
+def github_clone(repo_name='vishal2376/telegram-bot'):
+    git_url = "https://github.com/" + repo_name
+    repo_path = '../git_clones/'+ repo_name
+    zip_path = '../git_clones/'+ repo_name + '.zip'
+
+    if os.path.exists('../git_clones'):
+        shutil.rmtree('../git_clones')
+
+    repo = Repo.clone_from(git_url,repo_path)
+    
+    with open(zip_path,'wb') as zipfile:
+        repo.archive(zipfile,format='zip')
+
+    shutil.rmtree(repo_path)
+
+    return zip_path
