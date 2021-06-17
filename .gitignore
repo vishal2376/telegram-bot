@@ -1,2 +1,4 @@
 .env
 util/.env
+util/__pycache__/
+test.py
