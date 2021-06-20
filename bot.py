@@ -203,7 +203,7 @@ def msg_github_clone(m):
 			elif m.text == repo_name:
 				full_repo = user_name +'/'+repo_name
 				bot.send_chat_action(cid, 'typing')
-				msg = bot.send_message(cid,"Downloading files")
+				msg = bot.send_message(cid,"Downloading files",reply_markup=hideBoard)
 				bot.edit_message_text('Please wait...',msg.chat.id,msg.message_id)
 				bot.send_message(cid,'Note : Larger files take long time')
 				file_path = github_clone(full_repo)

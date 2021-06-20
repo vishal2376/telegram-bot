@@ -41,8 +41,7 @@ def search_repo(name):
 		text.append(repo.full_name)
 		count += 1
 		if count == 10:
-			break		
-	return text
+		    return text
 
 def github_clone(repo_name):
     git_url = "https://github.com/" + repo_name
@@ -80,3 +79,4 @@ def search_user_repo(name):
 		repo_list.append(repo.full_name)
 
 	return repo_list
+
