@@ -20,23 +20,20 @@ def get_repo_stars(repo_name):
 	text = repo.stargazers_count
 	return text
 
-def get_repo_filename(repo_name):
-	repo = g.get_repo(repo_name)
-	text = []
-	for content_file in repo.get_contents(""):
-		text.append(content_file.path)
-	return text
 
 def get_repo_issues(repo_name):
 	repo = g.get_repo(repo_name)
-	title = []
-	number = []
+	# title = []
+	count = 0
+	# number = []
 	for issue in repo.get_issues(state='open'):
-		title.append(issue.title)
-		number.append(issue.number)
-	return title , number 
+		count += 1
+		# title.append(issue.title)
+		# number.append(issue.number)
+	# return title , number
+	return count 
 
-def search_repo(name='hello world'):
+def search_repo(name):
 	repository = g.search_repositories(query=name)
 	count = 0
 	text = []
@@ -44,10 +41,10 @@ def search_repo(name='hello world'):
 		text.append(repo.full_name)
 		count += 1
 		if count == 10:
-			break;		
+			break		
 	return text
 
-def github_clone(repo_name='vishal2376/telegram-bot'):
+def github_clone(repo_name):
     git_url = "https://github.com/" + repo_name
     repo_path = 'github/git_clones/'+ repo_name
     zip_path = 'github/git_clones/'+ repo_name + '.zip'
@@ -74,4 +71,12 @@ def get_repo_list(name):
 	with open('github/user_name.txt','w') as f:
 		f.write(user_name)
 	
+	return repo_list
+
+def search_user_repo(name):
+	repository = g.search_repositories(query='user:'+name)
+	repo_list = []
+	for repo in repository:
+		repo_list.append(repo.full_name)
+
 	return repo_list
