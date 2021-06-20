@@ -13,7 +13,7 @@ A telegram bot which can do github search,clone Repository,provide resources for
   </a>
 </p>
 
-## Bot Link  : [Developer Bot](https://t.me/IndDeveloper)
+## Bot Link  : [Developer Bot](https://t.me/IndDeveloper_bot)
 
 ## Features
 
