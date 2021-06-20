@@ -41,29 +41,21 @@ To run this project, you will need to add the following environment variables
 ## Run Locally
 
  - Clone the project
-
 ```bash
   git clone https://github.com/vishal2376/telegram-bot
 ```
-
  - Go to the project directory
-
 ```bash
   cd telegram-bot
 ```
-
  - Install dependencies
-
 ```bash
   pip install -r requirements.txt
 ```
-
  - Run program
-
 ```bash
   python3 bot.py
 ```
-
 
   
 ## Author
