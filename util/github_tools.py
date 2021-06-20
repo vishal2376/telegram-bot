@@ -41,7 +41,8 @@ def search_repo(name):
 		text.append(repo.full_name)
 		count += 1
 		if count == 10:
-		    return text
+		    break
+	return text   
 
 def github_clone(repo_name):
     git_url = "https://github.com/" + repo_name
