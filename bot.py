@@ -11,8 +11,8 @@ import random
 import json
 from util.github_tools import *
 
-TOKEN = open('.env').readline()
-# TOKEN = os.getenv('TOKEN')
+# TOKEN = open('.env').readline()
+TOKEN = os.getenv('TOKEN')
 
 cpp_data = json.load(open('cpp/cpp_resource.json'))
 
