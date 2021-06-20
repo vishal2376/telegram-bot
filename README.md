@@ -1,4 +1,4 @@
-#Developer Bot
+# Developer Bot
 A telegram bot which can do github search,clone Repository,provide resources for learning etc...
 
 <p align="center">
