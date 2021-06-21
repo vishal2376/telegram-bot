@@ -43,9 +43,9 @@ hideBoard = types.ReplyKeyboardRemove()  # hide the keyboard
 commands = {
 	'start':'Restart bot',
     'cpp' : 'C++ resources',
-    'github' : 'Search and clone Repository',
     'all' : 'List all commands',
-    'help': 'Help', 
+    'help': 'Help',
+    'github' : 'Search and clone Repository',
     'codeforces' : 'still in development...',
     'stackoverflow' : 'still in development...'
 }
@@ -102,7 +102,7 @@ def command_cpp(m):
 @bot.message_handler(commands=['github'])
 def command_github(m):
 	cid = m.chat.id
-	bot.send_message(cid, "What do you want ? ", reply_markup=github_select)
+	bot.send_message(cid, "What do you want ?", reply_markup=github_select)
 	userStep[cid] = 'github'
 
 @bot.message_handler(commands=['codeforces'])
@@ -126,7 +126,7 @@ def command_help(m):
 	text += ' , I am a '+ random.choice(bot_name) + " Bot"
 	text += '\n\nI can do following things :'
 	text += '\n 🔸 Provide C++ Resources'
-	text += '\n 🔸 Search and Clone Github Repository'
+	text += '\n 🔸 Github Repository(comming soon)'
 	text += '\n 🔸 Codeforces features(comming soon)'
 	text += '\n 🔸 Stackoverflow QnA(comming soon)'
 	text += "\n\nSee all commands at  /all  :)"
@@ -173,10 +173,9 @@ def msg_github_select(m):
 	userStep[cid] = 0
 	bot.send_chat_action(cid, 'typing')
 	if m.text == 'Search':
-		#text = 'Enter your query '
-		text = 'This service is not available for some days'
-		bot.send_message(m.chat.id,text,disable_web_page_preview=True,reply_markup=hideBoard)
-		#userStep[cid] = 'github_search' 
+		text = 'Enter your query '
+		msg = bot.send_message(m.chat.id,text,disable_web_page_preview=True,reply_markup=hideBoard)
+		userStep[cid] = 'github_search' 
 	elif m.text == 'Search(by user)':
 		text = 'Enter username \nExample : vishal2376'
 		msg = bot.send_message(m.chat.id,text,disable_web_page_preview=True,reply_markup=hideBoard)
