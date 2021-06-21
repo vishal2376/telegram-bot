@@ -9,10 +9,10 @@ import telebot
 from telebot import types
 import random
 import json
-from util.github_tools import *
+from github_tools import *
 
 # TOKEN = open('.env').readline()
-TOKEN = os.getenv('TOKEN')
+TOKEN = os.getenv('TG_TOKEN')
 
 cpp_data = json.load(open('cpp/cpp_resource.json'))
 
