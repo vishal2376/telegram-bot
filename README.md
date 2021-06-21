@@ -32,8 +32,8 @@ To run this project, you will need to add the following environment variables
 
  - Create a file **.env** in **telegram-bot** and put following TOKENS.
 
-`TG_TOKEN=Your_telegram_token_here`
-`GITHUB_TOKEN=Your_github_token_here`
+`TG_TOKEN=Your_telegram_token`
+`GITHUB_TOKEN=Your_github_token`
 
 
 ## Run Locally
@@ -53,14 +53,14 @@ To run this project, you will need to add the following environment variables
 ## More projects : 
    
   - [Virutal Assistant](https://github.com/vishal2376/virtual-assistant)
-  - [ToDo](https://github.com/vishal2376/todo) 
+  - [Todo](https://github.com/vishal2376/todo) 
   - [Password Generator](https://github.com/vishal2376/password-generator) 
 
-## Contact :  
+## Contacts :  
   - [Telegram](https://t.me/vishal2376/)
   - [Instagram](https://www.instagram.com/vishal_2376/)
   - [Join Telegram group](https://t.me/cppwithtricks)
   
 ## Feedback
 
-If you have any feedback, please reach out to us through contacts.
+If you have any feedback, please reach out to us through above contacts.
