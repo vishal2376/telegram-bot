@@ -11,8 +11,8 @@ import random
 import json
 from github_tools import *
 
-# TOKEN = open('test-key.txt').readline()
-TOKEN = os.getenv('TG_TOKEN')
+TOKEN = open('test-key.txt').readline()
+# TOKEN = os.getenv('TG_TOKEN')
 
 cpp_data = json.load(open('cpp/cpp_resource.json'))
 
@@ -167,26 +167,29 @@ def msg_cpp_select(m):
 		bot.send_message(cid, "Invalid Commands")
 
 #-------------------github all functions-------------------------
+#[value=github]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'github')
 def msg_github_select(m):
 	cid = m.chat.id
 	userStep[cid] = 0
 	bot.send_chat_action(cid, 'typing')
 	if m.text == 'Search':
-		text = 'Enter your query '
-		msg = bot.send_message(m.chat.id,text,disable_web_page_preview=True,reply_markup=hideBoard)
-		userStep[cid] = 'github_search' 
+		text = 'Not available for some days'
+		# text = 'Enter your query '
+		bot.send_message(m.chat.id,text,reply_markup=hideBoard)
+		# userStep[cid] = 'github_search' 
 	elif m.text == 'Search(by user)':
 		text = 'Enter username \nExample : vishal2376'
-		msg = bot.send_message(m.chat.id,text,disable_web_page_preview=True,reply_markup=hideBoard)
+		bot.send_message(m.chat.id,text,reply_markup=hideBoard)
 		userStep[cid] = 'github_search_user'
 	elif m.text == 'Clone Repository':
 		text = 'Enter username \nExample : vishal2376'
-		msg = bot.send_message(m.chat.id,text,reply_markup=hideBoard)
+		bot.send_message(m.chat.id,text,reply_markup=hideBoard)
 		userStep[cid] = 'github_clone_view'
 	else:
 		bot.send_message(cid, "Invalid Commands")
 
+#[value=github_clone]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'github_clone')
 def msg_github_clone(m):
 	cid = m.chat.id
@@ -203,9 +206,9 @@ def msg_github_clone(m):
 			elif m.text == repo_name:
 				full_repo = user_name +'/'+repo_name
 				bot.send_chat_action(cid, 'typing')
-				msg = bot.send_message(cid,"Downloading files",reply_markup=hideBoard)
+				msg = bot.send_message(cid,"Downloading files")
 				bot.edit_message_text('Please wait...',msg.chat.id,msg.message_id)
-				bot.send_message(cid,'Note : Larger files take long time')
+				bot.send_message(cid,'Note : Larger files take long time',reply_markup=hideBoard)
 				file_path = github_clone(full_repo)
 				bot.send_chat_action(cid, 'upload_document')
 				file = open(file_path,'rb')
@@ -217,6 +220,7 @@ def msg_github_clone(m):
 
 button = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
+#[value=github_clone_view]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'github_clone_view')
 def view_clone_repo(m):
 	try:
@@ -229,6 +233,7 @@ def view_clone_repo(m):
 		bot.send_message(m.chat.id,'Something went wrong , Try again later',reply_markup=hideBoard)
 		print("Error : Keyboard not created")
 
+#[value=github_search_user]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'github_search_user')
 def view_user_repo(m):
 	try:
@@ -246,6 +251,7 @@ def view_user_repo(m):
 		bot.send_message(m.chat.id,'Github API search Limit exceed',reply_markup=hideBoard)
 		print("Error : Github search Limit exceed")
 
+#[value=github_search]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'github_search')		
 def view_repo(m):
 	try:
