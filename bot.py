@@ -174,10 +174,10 @@ def msg_github_select(m):
 	userStep[cid] = 0
 	bot.send_chat_action(cid, 'typing')
 	if m.text == 'Search':
-		text = 'Not available for some days'
-		# text = 'Enter your query '
+		# text = 'Not available for some days'
+		text = 'Enter your query '
 		bot.send_message(m.chat.id,text,reply_markup=hideBoard)
-		# userStep[cid] = 'github_search' 
+		userStep[cid] = 'github_search' 
 	elif m.text == 'Search(by user)':
 		text = 'Enter username \nExample : vishal2376'
 		bot.send_message(m.chat.id,text,reply_markup=hideBoard)
@@ -206,25 +206,19 @@ def msg_github_clone(m):
 			elif m.text == repo_name:
 				full_repo = user_name +'/'+repo_name
 				bot.send_chat_action(cid, 'typing')
-				msg = bot.send_message(cid,"Downloading files")
-				bot.edit_message_text('Please wait...',msg.chat.id,msg.message_id)
-				bot.send_message(cid,'Note : Larger files take long time',reply_markup=hideBoard)
-				file_path = github_clone(full_repo)
-				bot.send_chat_action(cid, 'upload_document')
-				file = open(file_path,'rb')
-				bot.send_document(cid,file)		
+				text = 'https://github.com/'+full_repo+'/archive/refs/heads/master.zip'
+				msg = bot.send_message(cid,text,reply_markup=hideBoard)
+
 	except Exception as e:
 		bot.send_message(cid,'Something went Wrong',reply_markup=hideBoard)	
 		print('Error : Failed to download or send files')
-
-
-button = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 
 #[value=github_clone_view]
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'github_clone_view')
 def view_clone_repo(m):
 	try:
 		repo_list = get_repo_list(m.text)
+		button = types.ReplyKeyboardMarkup(one_time_keyboard=True)
 		for repo_name in repo_list:
 			button.add(repo_name)
 		bot.send_message(m.chat.id,'Click button to clone Repository \n\nUse /stop to exit',reply_markup=button)
@@ -237,13 +231,14 @@ def view_clone_repo(m):
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'github_search_user')
 def view_user_repo(m):
 	try:
+		userStep[m.chat.id]=0
 		repo_list = search_user_repo(m.text)
 		text = 'Github Repository List\n\n'
 		for repo_name in repo_list:		
 			name = repo_name.split('/')[1]
 			stars = get_repo_stars(repo_name)
 			issues = get_repo_issues(repo_name)
-			text += '🔸 '+ name + '\n'
+			text += '🔸 <b>'+ name + '</b>\n'
 			text += 'Stars : '+str(stars)+'      |     Issues : '+ str(issues)
 			text += '\n<a href = "https://github.com/'+ repo_name + '">Click here to visit</a>\n\n'  
 		bot.send_message(m.chat.id,text,disable_web_page_preview=True)
@@ -255,6 +250,7 @@ def view_user_repo(m):
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'github_search')		
 def view_repo(m):
 	try:
+		userStep[m.chat.id]=0
 		repo_list = search_repo(m.text)
 		text = 'Top Search Results \n\n'
 		for repo_name in repo_list:
@@ -264,7 +260,7 @@ def view_repo(m):
 			text += '🔸 '+ name + '\n'
 			text += 'Stars : '+str(stars)+'      |     Issues : '+ str(issues)
 			text += '\n<a href = "https://github.com/'+ repo_name + '">Click here to visit</a>\n\n'
-			bot.send_message(m.chat.id,text,disable_web_page_preview=True)
+		bot.send_message(m.chat.id,text,disable_web_page_preview=True)
 	except Exception as e:
 		bot.send_message(m.chat.id,'Github API search Limit exceed',reply_markup=hideBoard)
 		print("Error : Search limit exceed")

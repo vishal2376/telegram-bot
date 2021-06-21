@@ -1,7 +1,5 @@
 from github import Github
-from git import Repo
-import shutil
-import os
+import os 
 
 TOKEN = os.getenv('GITHUB_TOKEN')
 
@@ -44,22 +42,6 @@ def search_repo(name):
 		    break
 	return text   
 
-def github_clone(repo_name):
-    git_url = "https://github.com/" + repo_name
-    repo_path = 'github/git_clones/'+ repo_name
-    zip_path = 'github/git_clones/'+ repo_name + '.zip'
-
-    if os.path.exists('github/git_clones'):
-        shutil.rmtree('github/git_clones')
-
-    repo = Repo.clone_from(git_url,repo_path)
-    
-    with open(zip_path,'wb') as zipfile:
-        repo.archive(zipfile,format='zip')
-
-    shutil.rmtree(repo_path)
-
-    return zip_path
 
 def get_repo_list(name):
 	repository = g.search_repositories(query='user:'+name)
