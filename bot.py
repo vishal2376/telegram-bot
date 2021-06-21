@@ -43,11 +43,11 @@ hideBoard = types.ReplyKeyboardRemove()  # hide the keyboard
 commands = {
 	'start':'Restart bot',
     'cpp' : 'C++ resources',
-    'all' : 'List all commands',
-    'help': 'Help',
     'github' : 'Search and clone Repository',
     'codeforces' : 'still in development...',
-    'stackoverflow' : 'still in development...'
+    'stackoverflow' : 'still in development...',
+    'help': 'Help',
+    'all' : 'List all commands',
 }
 
 #--------------------others functions----------------------
@@ -126,7 +126,7 @@ def command_help(m):
 	text += ' , I am a '+ random.choice(bot_name) + " Bot"
 	text += '\n\nI can do following things :'
 	text += '\n 🔸 Provide C++ Resources'
-	text += '\n 🔸 Github Repository(comming soon)'
+	text += '\n 🔸 Github search , Clone Repository'
 	text += '\n 🔸 Codeforces features(comming soon)'
 	text += '\n 🔸 Stackoverflow QnA(comming soon)'
 	text += "\n\nSee all commands at  /all  :)"
