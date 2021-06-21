@@ -1,5 +1,5 @@
 # Developer Bot
-A telegram bot which can do github search,clone Repository,provide resources for learning etc...
+A telegram bot which can do stuff related to github, stackoverflow,codeforces etc...
 
 <p align="center">
   <a href="https://github.com/vishal2376/telegram-bot/issues">
@@ -30,33 +30,20 @@ A telegram bot which can do github search,clone Repository,provide resources for
 
 To run this project, you will need to add the following environment variables
 
- - Create a file **.env** in **telegram-bot** and put this TOKEN.
-`TOKEN=Your_token_here` 
-	> NOTE : Telegram Token (get from [Botfather](t.me/botfather))
+ - Create a file **.env** in **telegram-bot** and put following TOKENS.
 
-- Create a file **.env** in **telegram-bot/util** and put this TOKEN.
-`GITHUB_TOKEN=Your_token_here`
+`TG_TOKEN=Your_telegram_token_here`
+`GITHUB_TOKEN=Your_github_token_here`
 
 
 ## Run Locally
 
- - Clone the project
 ```bash
   git clone https://github.com/vishal2376/telegram-bot
-```
- - Go to the project directory
-```bash
   cd telegram-bot
-```
- - Install dependencies
-```bash
   pip install -r requirements.txt
-```
- - Run program
-```bash
   python3 bot.py
 ```
-
   
 ## Author
 
