@@ -254,10 +254,10 @@ def view_repo(m):
 		repo_list = search_repo(m.text)
 		text = 'Top Search Results \n\n'
 		for repo_name in repo_list:
-			name = repo_name.split('/')[1]
+			#name = repo_name.split('/')[1]
 			stars = get_repo_stars(repo_name)
 			issues = get_repo_issues(repo_name)
-			text += '🔸 '+ name + '\n'
+			text += '🔸 '+ repo_name + '\n'
 			text += 'Stars : '+str(stars)+'      |     Issues : '+ str(issues)
 			text += '\n<a href = "https://github.com/'+ repo_name + '">Click here to visit</a>\n\n'
 		bot.send_message(m.chat.id,text,disable_web_page_preview=True)
