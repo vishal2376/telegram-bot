@@ -107,7 +107,7 @@ def command_github(m):
 
 @bot.message_handler(commands=['codeforces'])
 def command_codeforces(m):
-	text = "Comming soon....."
+	text = "Still in development..."
 	bot.reply_to(m, text)
 
 @bot.message_handler(commands=['stackoverflow'])
@@ -127,8 +127,8 @@ def command_help(m):
 	text += '\n\nI can do following things :'
 	text += '\n 🔸 Provide C++ Resources'
 	text += '\n 🔸 Github search , Clone Repository'
-	text += '\n 🔸 Codeforces features(comming soon)'
-	text += '\n 🔸 Stackoverflow QnA(comming soon)'
+	text += '\n 🔸 Codeforces Visualizer, Random Problems(comming soon)'
+	text += '\n 🔸 Stackoverflow Search (comming soon)'
 	text += "\n\nSee all commands at  /all  :)"
 	text += "\n\n\nContact Developer 👨‍💻: @vishal2376"
 	bot.reply_to(m, text)
