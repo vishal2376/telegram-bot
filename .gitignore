@@ -1,4 +1,4 @@
 .env
-src/test.py
-src/test-key.txt
-src/__pycache__ 
+test.py
+test-key.txt
+utils/__pycache__ 
