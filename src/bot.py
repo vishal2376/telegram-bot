@@ -11,8 +11,8 @@ import random
 import json
 from github_tools import *
 
-#TOKEN = open('test-key.txt').readline()
-TOKEN = os.getenv('TG_TOKEN')
+TOKEN = open('test-key.txt').readline()
+# TOKEN = os.getenv('TG_TOKEN')
 
 cpp_data = json.load(open('cpp/cpp_resource.json'))
 
@@ -146,7 +146,7 @@ def command_start(m):
 @bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 'cpp')
 def msg_cpp_select(m):
 	cid = m.chat.id
-	userStep[cid] = 0
+	# userStep[cid] = 0
 	bot.send_chat_action(cid, 'typing')
 	if m.text == 'Youtube videos':
 		text = cpp_resource('yt')
@@ -162,7 +162,7 @@ def msg_cpp_select(m):
 		bot.send_message(cid,text,disable_web_page_preview=True,reply_markup=hideBoard)
 	elif m.text =='Courses':
 		text = cpp_resource('courses')
-		bot.send_message(cid,text,disable_web_page_preview=True,reply_markup=hideBoard)
+		bot.send_message(cid,text,disable_web_page_preview=True)
 	else:
 		bot.send_message(cid, "Invalid Commands")
 
