@@ -11,10 +11,10 @@ import random
 import json
 from github_tools import *
 
-TOKEN = open('test-key.txt').readline()
-# TOKEN = os.getenv('TG_TOKEN')
+# TOKEN = open('test-key.txt').readline()
+TOKEN = os.getenv('TG_TOKEN')
 
-cpp_data = json.load(open('cpp/cpp_resource.json'))
+cpp_data = json.load(open('utils/resource/cpp_resource.json'))
 
 bot = telebot.TeleBot(TOKEN,parse_mode='HTML')
 
