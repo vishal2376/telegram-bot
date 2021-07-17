@@ -9,10 +9,10 @@ import telebot
 from telebot import types
 import random
 import json
-from github_tools import *
+from utils.github_tools import *
 
-# TOKEN = open('test-key.txt').readline()
-TOKEN = os.getenv('TG_TOKEN')
+TOKEN = open('test-key.txt').readline()
+# TOKEN = os.getenv('TG_TOKEN')
 
 cpp_data = json.load(open('utils/resource/cpp_resource.json'))
 
@@ -232,7 +232,7 @@ def view_clone_repo(m):
 def view_user_repo(m):
 	try:
 		userStep[m.chat.id]=0
-		repo_list = search_user_repo(m.text)
+		repo_list = get_repo_list(m.text,1)
 		text = 'Github Repository List\n\n'
 		for repo_name in repo_list:		
 			name = repo_name.split('/')[1]
@@ -272,10 +272,7 @@ def command_default(m):
 	lower_text = m.text.lower()
 	if lower_text == 'hello' or lower_text == 'hi':
 		text = random.choice(hey_msg)
-		if m.chat.type == 'private':
-			text += m.chat.first_name
-		else:
-			text += random.choice(user_name)
+		text += m.from_user.first_name
 		bot.reply_to(m, text)
  
 bot.polling()

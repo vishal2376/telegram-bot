@@ -1,5 +1,7 @@
 from github import Github
-import os 
+import os
+import json
+import requests
 
 TOKEN = os.getenv('GITHUB_TOKEN')
 
@@ -18,8 +20,6 @@ def get_repo_stars(repo_name):
 	text = repo.stargazers_count
 	return text
 
-
-get_repo_stars(repo_name)
 def get_repo_issues(repo_name):
 	repo = g.get_repo(repo_name)
 	# title = []
@@ -44,23 +44,21 @@ def search_repo(name):
 	return text   
 
 
-def get_repo_list(name):
-	repository = g.search_repositories(query='user:'+name)
+def get_repo_list(user_name,flag=0):
 	repo_list = []
-	for repo in repository:
-		user_name = (repo.full_name).split('/')[0]
-		repo_list.append((repo.full_name).split('/')[1])
+	url = 'https://api.github.com/users/'+user_name+'/repos'
+	r = requests.get(url)
+	if r.status_code == 200:
+		data = json.loads(r.text)
+		if flag == 0:
+			for repos in data:
+				repo_list.append(repos['name'])
+			with open('user_name.txt','w') as f:
+				f.write(user_name)
+		else:
+			for repos in data:
+				repo_list.append(repos['full_name'])			
+	else:
+		print(r.status_code)
 
-	with open('user_name.txt','w') as f:
-		f.write(user_name)
-	
 	return repo_list
-
-def search_user_repo(name):
-	repository = g.search_repositories(query='user:'+name)
-	repo_list = []
-	for repo in repository:
-		repo_list.append(repo.full_name)
-
-	return repo_list
-
