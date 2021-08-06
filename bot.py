@@ -9,6 +9,9 @@ import telebot
 from telebot import types
 import random
 import json
+
+import threading ,schedule,time #extras
+
 from utils.github_tools import *
 
 TOKEN = open('test-key.txt').readline()
@@ -78,9 +81,9 @@ def get_user_step(uid):
 
 #console output
 def listener(messages):
-    for m in messages:
-        if m.content_type == 'text':
-            print(str(m.chat.first_name) + " : " + m.text)
+	for m in messages:
+		if m.content_type == 'text':
+			print(m.from_user.first_name +'['+ str(m.chat.id) + "] : " + m.text)
 
 bot.set_update_listener(listener)
 
@@ -265,6 +268,22 @@ def view_repo(m):
 		bot.send_message(m.chat.id,'Github API search Limit exceed',reply_markup=hideBoard)
 		print("Error : Search limit exceed")
 
+#-------------------------------------------------
+#-----------------EXTRA-------------------------
+run = True
+rem_time = '20:15'
+def remainder():
+	msg = "⏰ [Remainder]\n\n"
+	msg += "👨‍💻 Codeforces Contest will start in 15min.\n"
+	msg += "\nLink : "
+	msg += rem_link
+	bot.send_message(grp_id,msg,disable_web_page_preview=True)
+	global run
+	run = False
+	return schedule.CancelJob
+#-------------------------------------------------
+#-------------------------------------------------
+
 # filter message
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def command_default(m):
@@ -274,6 +293,24 @@ def command_default(m):
 		text = random.choice(hey_msg)
 		text += m.from_user.first_name
 		bot.reply_to(m, text)
- 
+
+	if 'https://codeforces.com/contestInvitation' in m.text:
+		global grp_id
+		global rem_link
+		grp_id = m.chat.id
+		rem_link = m.text
+		
+		schedule.every().day.at(rem_time).do(remainder)
+		
+		text = "⏰ Codeforces remainder scheduled\n"
+		bot.send_message(m.chat.id,text)
+		def forever():
+			while run:
+				schedule.run_pending()
+				time.sleep(1)
+
+		t1 = threading.Thread(target=forever,name='remainder')
+		t1.start()		
+
 bot.polling()
 
