@@ -198,7 +198,7 @@ def msg_github_clone(m):
 	cid = m.chat.id
 	userStep[cid] = 0
 	user_name = ''
-	with open('github/user_name.txt','r') as f:
+	with open('./user_name.txt','r') as f:
 		user_name = f.readline()
 	repo_list = get_repo_list(user_name)
 	try:
